@@ -52,6 +52,7 @@ class plot
 public:
     /// Construct a default plot object
     plot();
+    plot(const char* filename);
 
     /// Destroy this plot object
     ~plot();
@@ -175,6 +176,22 @@ private:
 // Initialize the counter of plot objects
 std::size_t plot::m_counter = 0;
 
+plot::plot(const char* filename)
+: m_filename(str(filename) + ".dat"),
+  m_xlabel("x"),
+  m_ylabel("y"),
+  m_zlabel("z")
+{
+    // Increment the counter
+    ++m_counter;
+
+    // Open the file where provided data is dumped for plotting
+    m_filedata.open(m_filename);
+
+    // Set default values
+    size(DEFAULT_FIGURE_WIDTH, DEFAULT_FIGURE_HEIGHT);
+    pallete(DEFAULT_PALLETE);
+}
 plot::plot()
 : m_filename("plot" + str(m_counter) + ".dat"),
   m_xlabel("x"),
